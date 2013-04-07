@@ -1,0 +1,10 @@
+#!/usr/bin/env php
+<?php
+use Symfony\Component\Console\Application;
+use GoGoCrankin\Runner\CommandBridge;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+$app = new Application('go-go-crankin', 'dev-master');
+$app->add(new CommandBridge('analyze', 'Analyze a CodeError.js file'));
+
+$app->run();
