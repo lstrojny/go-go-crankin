@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<go-go-crankin>
+    <files>
+        <includes>
+            <directory>app</directory>
+            <directory>vendor</directory>
+            <file>File.php</file>
+            <regex>/.*/</regex>
+        </includes>
+
+        <excludes>
+            <regex>@/ExcludePath/@</regex>
+            <regex>/foo/</regex>
+        </excludes>
+    </files>
+
+    <filters>
+        <filter name="Ignore TestCase::getSimpleMock()">
+            <glob key="file">*/Tests/*</glob>
+            <regex key="symbol">/getSimpleMock/</regex>
+        </filter>
+
+        <filter name="Ignore UUID symbols">
+            <string key="error">UndefinedConstant</string>
+            <glob key="symbol">UUID_*</glob>
+            <glob key="symbol">uuid_*</glob>
+        </filter>
+
+        <filter name="Ignore all warnings in .inc-files">
+            <glob key="file">*.inc</glob>
+            <regex key="file">/\.php$/</regex>
+        </filter>
+    </filters>
+</go-go-crankin>

@@ -12,5 +12,5 @@ interface FilterInterface
      * @param string $symbol
      * @return bool
      */
-    public function filter($error, $file, Position $position, $symbol);
+    public function shouldIgnore($error, $file, Position $position, $symbol);
 }

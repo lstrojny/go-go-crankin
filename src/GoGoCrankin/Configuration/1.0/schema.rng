@@ -1,0 +1,88 @@
+<element
+        name="go-go-crankin"
+        xmlns="http://relaxng.org/ns/structure/1.0"
+        datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+    <grammar>
+        <start>
+            <group>
+                <element name="files">
+                    <element name="includes">
+                        <oneOrMore>
+                            <ref name="files.class"/>
+                        </oneOrMore>
+                    </element>
+                    <optional>
+                        <element name="excludes">
+                            <ref name="files.class"/>
+                        </element>
+                    </optional>
+                </element>
+
+                <optional>
+                    <element name="filters">
+                        <oneOrMore>
+                            <element name="filter">
+                                <attribute name="name">
+                                    <ref name="notEmpty.class"/>
+                                </attribute>
+                                <oneOrMore>
+                                    <interleave>
+                                        <zeroOrMore>
+                                            <element name="regex">
+                                                <ref name="expression.class"/>
+                                            </element>
+                                        </zeroOrMore>
+                                        <zeroOrMore>
+                                            <element name="string">
+                                                <ref name="expression.class"/>
+                                            </element>
+                                        </zeroOrMore>
+                                        <zeroOrMore>
+                                            <element name="glob">
+                                                <ref name="expression.class"/>
+                                            </element>
+                                        </zeroOrMore>
+                                    </interleave>
+                                </oneOrMore>
+                            </element>
+                        </oneOrMore>
+                    </element>
+                </optional>
+
+            </group>
+        </start>
+
+        <define name="files.class">
+            <interleave>
+                <zeroOrMore>
+                    <element name="directory">
+                        <ref name="notEmpty.class"/>
+                    </element>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <element name="file">
+                        <ref name="notEmpty.class"/>
+                    </element>
+                </zeroOrMore>
+                <zeroOrMore>
+                    <element name="regex">
+                        <ref name="notEmpty.class"/>
+                    </element>
+                </zeroOrMore>
+            </interleave>
+        </define>
+
+        <define name="expression.class">
+            <attribute name="key">
+                <ref name="notEmpty.class"/>
+            </attribute>
+            <ref name="notEmpty.class"/>
+        </define>
+
+        <define name="notEmpty.class">
+            <data type="string">
+                <param name="pattern">.+</param>
+            </data>
+        </define>
+    </grammar>
+</element>

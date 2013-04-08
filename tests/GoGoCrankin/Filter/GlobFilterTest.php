@@ -4,7 +4,7 @@ namespace GoGoCrankin\Filter;
 use GoGoCrankin\Value\Position;
 use PHPUnit_Framework_TestCase as TestCase;
 
-class RegexFilterTest extends TestCase
+class GlobFilterTest extends TestCase
 {
     /**
      * @var Position
@@ -19,8 +19,8 @@ class RegexFilterTest extends TestCase
     public function getConstructorArguments()
     {
         $arguments = [
-            ['error', '/Test/'],
-            ['file', '/\.php$/'],
+            ['error', '*Test*'],
+            ['file', 'file.ph?'],
         ];
 
         return array_merge($arguments, $this->getLineConstructorArguments());
@@ -29,27 +29,25 @@ class RegexFilterTest extends TestCase
     public function getLineConstructorArguments()
     {
         return [
-            ['startLine', '/^12$/'],
-            ['endLine', '/^13$/'],
-            ['startColumn', '/^1$/'],
-            ['endColumn', '/^2$/'],
+            ['startLine', '12*'],
+            ['endLine', '13*'],
+            ['startColumn', '1'],
+            ['endColumn', '2'],
         ];
     }
 
     /** @dataProvider getConstructorArguments */
     public function testFilter($key, $pattern)
     {
-        $filter = new RegexFilter($key, $pattern);
-
-        $this->assertTrue($filter->shouldIgnore('Test', 'test.php', $this->position, '$var'));
+        $filter = new GlobFilter($key, $pattern);
+        $this->assertTrue($filter->shouldIgnore('Test', 'file.php', $this->position, '$var'));
         $this->assertFalse($filter->shouldIgnore('', '', new Position(), ''));
     }
 
     /** @dataProvider getLineConstructorArguments */
     public function testNullValuesInPositionAlwaysMatchPositive($key, $pattern)
     {
-        $filter = new RegexFilter($key, $pattern);
-
+        $filter = new GlobFilter($key, $pattern);
         $this->assertFalse($filter->shouldIgnore('Test', 'file.php', new Position(), '$var'));
     }
 }

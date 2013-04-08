@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<go-go-crankin>
+    <files>
+        <includes>
+            <directory>vendor/</directory>
+        </includes>
+    </files>
+</go-go-crankin>
