@@ -10,7 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class CommandBridge extends Command
+class ReportCommandBridge extends Command
 {
     private $progressReporters = [
         false => 'GoGoCrankin\Reporter\TextUiProgressReporter',
@@ -18,20 +18,21 @@ class CommandBridge extends Command
     ];
 
     private $resultReporters = [
-        'text' => 'GoGoCrankin\Reporter\TextResultReporter',
+        'text'       => 'GoGoCrankin\Reporter\TextResultReporter',
         'checkstyle' => 'GoGoCrankin\Reporter\CheckstyleResultReporter',
     ];
 
     protected function configure()
     {
         $this
+            ->setDescription('Generate a report from a CodeError.js file')
             ->addArgument('file', InputArgument::REQUIRED)
             ->addOption('reporter', null, InputOption::VALUE_REQUIRED, 'Specify a reporter. Either "text" or "checkstyle"', 'text');
     }
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $runner = new Runner(
+        $runner = new ReportGenerator(
             $input->getArgument('file'),
             $this->create($input, 'reporter', $this->resultReporters),
             $this->create($input, 'quiet', $this->progressReporters)

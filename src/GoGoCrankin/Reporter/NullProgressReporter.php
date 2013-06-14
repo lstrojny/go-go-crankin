@@ -1,9 +1,9 @@
 <?php
 namespace GoGoCrankin\Reporter;
 
-class NullProgressReporter implements ProgressReporterInterface
+final class NullProgressReporter implements ProgressReporterInterface
 {
-    public function beginReport()
+    public function beginReport($section, $context = null)
     {
     }
 
@@ -12,6 +12,14 @@ class NullProgressReporter implements ProgressReporterInterface
     }
 
     public function endReport()
+    {
+    }
+
+    public function start()
+    {
+    }
+
+    public function stop()
     {
     }
 }

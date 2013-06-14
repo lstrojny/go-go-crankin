@@ -3,7 +3,7 @@ namespace GoGoCrankin\Reporter;
 
 use GoGoCrankin\Value\Position;
 
-class TextResultReporter implements ResultReporterInterface
+final class TextResultReporter implements ResultReporterInterface
 {
     private $lines = [];
 

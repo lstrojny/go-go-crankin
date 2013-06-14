@@ -11,7 +11,7 @@ use LibXMLError;
 use Exception;
 use RuntimeException;
 
-class XmlConfigurationReader
+class XmlConfigurationReader implements ConfigurationReaderInterface
 {
     private $filterMap = [
         'glob'   => 'GoGoCrankin\\Filter\\GlobFilter',
@@ -38,11 +38,11 @@ class XmlConfigurationReader
         ];
         foreach ($this->handleXmlErrors([$xpath, 'query'], ['/go-go-crankin/files/includes/*']) as $includeNode) {
             /** @var $includeNode DOMElement */
-            $includes[$includeNode->tagName][] = $includeNode->textContent;
+            $includes[$includeNode->tagName][] = $this->processVariables($includeNode->tagName, $includeNode->textContent, $fileName);
         }
         foreach ($this->handleXmlErrors([$xpath, 'query'], ['/go-go-crankin/files/excludes/*']) as $excludeNode) {
             /** @var $excludeNode DOMElement */
-            $excludes[$excludeNode->tagName][] = $excludeNode->textContent;
+            $excludes[$excludeNode->tagName][] = $this->processVariables($excludeNode->tagName, $excludeNode->textContent, $fileName);
         }
 
         $filters = [];
@@ -82,6 +82,17 @@ class XmlConfigurationReader
             libxml_use_internal_errors($useInternalErrors);
             unregister_tick_function([&$this, 'tryThrowXmlErrors']);
         };
+    }
+
+    private function processVariables($nodeType, $value, $fileName)
+    {
+        if ($nodeType === 'regex') {
+            return $value;
+        }
+
+        $value = str_replace(['${basedir}', '${file}'], [dirname($fileName), $fileName], $value);
+
+        return $value;
     }
 
     public function tryThrowXmlErrors()

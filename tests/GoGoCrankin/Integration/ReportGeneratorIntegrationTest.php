@@ -3,22 +3,24 @@ namespace GoGoCrankin\Integration;
 
 use GoGoCrankin\Reporter\TextResultReporter;
 use GoGoCrankin\Reporter\TextUiProgressReporter;
-use GoGoCrankin\Runner\Runner;
+use GoGoCrankin\Runner\ReportGenerator;
+use PHPUnit_Framework_TestCase as TestCase;
 
-class IntegrationTest extends \PHPUnit_Framework_TestCase
+class ReportGeneratorIntegrationTest extends TestCase
 {
-    private $runner;
+    /** @var ReportGenerator */
+    private $reportGenerator;
 
     public function setUp()
     {
-        $this->runner = new Runner(
+        $this->reportGenerator = new ReportGenerator(
             __DIR__ . '/Fixtures/simple.js',
             new TextResultReporter(),
             new TextUiProgressReporter()
         );
     }
 
-    public function testRun()
+    public function testRunningReportGenerator()
     {
         $output = <<<'EOS'
 HipHop static code analysis report
@@ -34,6 +36,18 @@ src/UndeclaredConstant1.php, line 32, character 33 - 48    UUID_TYPE_RANDOM
 src/UndeclaredConstant2.php, line 32, character 33 - 48    UUID_TYPE_RANDOM
 
 EOS;
-        $this->assertSame($output, $this->runner->run(static function() {}));
+        $progressReport = '';
+        $this->assertSame($output, $this->reportGenerator->run(function($output) use (&$progressReport) {
+            $progressReport .= $output;
+        }));
+
+        $progressReportExpected = <<<'EOS'
+
+Analyzing %s
+....
+
+EOS;
+
+        $this->assertSame(sprintf($progressReportExpected, __DIR__ . '/Fixtures/simple.js'), $progressReport);
     }
 }

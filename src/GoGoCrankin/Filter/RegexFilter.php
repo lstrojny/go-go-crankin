@@ -3,7 +3,7 @@ namespace GoGoCrankin\Filter;
 
 use GoGoCrankin\Value\Position;
 
-class RegexFilter extends AbstractFilter
+final class RegexFilter extends AbstractFilter
 {
     public function __construct($key, $pattern)
     {

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<go-go-crankin>
+    <files>
+        <includes>
+            <directory>${basedir}/source</directory>
+            <regex>/\.php$/</regex>
+        </includes>
+    </files>
+</go-go-crankin>

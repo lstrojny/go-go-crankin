@@ -1,7 +1,7 @@
 <?php
 namespace GoGoCrankin\Filter;
 
-class GlobFilter extends AbstractFilter
+final class GlobFilter extends AbstractFilter
 {
     protected function doMatch($value)
     {

@@ -3,7 +3,7 @@ namespace GoGoCrankin\Filter;
 
 use GoGoCrankin\Value\Position;
 
-class CompositeFilter implements FilterInterface
+final class CompositeFilter implements FilterInterface
 {
     /**
      * @var FilterInterface[]

@@ -90,8 +90,8 @@ class XmlConfigurationReaderTest extends TestCase
 
         $this->assertSame(
             [
-                'directory' => ['app', 'vendor'],
-                'file'     => ['File.php'],
+                'directory' => ['app', 'vendor', __DIR__ . '/Fixtures'],
+                'file'     => ['File.php', __DIR__ . '/Fixtures/full.xml'],
                 'regex'     => ['/.*/'],
             ],
             $configuration->getIncludes()

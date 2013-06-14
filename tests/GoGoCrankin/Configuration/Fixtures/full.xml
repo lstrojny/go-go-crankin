@@ -4,7 +4,9 @@
         <includes>
             <directory>app</directory>
             <directory>vendor</directory>
+            <directory>${basedir}</directory>
             <file>File.php</file>
+            <file>${file}</file>
             <regex>/.*/</regex>
         </includes>
 

@@ -5,7 +5,7 @@ use DOMDocument;
 use DOMNode;
 use GoGoCrankin\Value\Position;
 
-class CheckstyleResultReporter implements ResultReporterInterface
+final class CheckstyleResultReporter implements ResultReporterInterface
 {
     /**
      * @var DOMDocument
@@ -30,6 +30,7 @@ class CheckstyleResultReporter implements ResultReporterInterface
     public function __construct()
     {
         $this->doc = new DOMDocument('1.0');
+        $this->doc->formatOutput = true;
     }
 
     public function beginSection($section)

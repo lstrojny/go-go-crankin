@@ -1,7 +1,7 @@
 <?php
 namespace GoGoCrankin\Reporter;
 
-class TextUiProgressReporter implements ProgressReporterInterface
+final class TextUiProgressReporter implements ProgressReporterInterface
 {
     private $count = 1;
 
@@ -9,9 +9,23 @@ class TextUiProgressReporter implements ProgressReporterInterface
 
     private $width = 80;
 
-    public function beginReport()
+    public function start()
     {
-        return PHP_EOL . 'go-go-cranking dev-master' . PHP_EOL . PHP_EOL;
+        return PHP_EOL . 'go-go-crankin dev-master' . PHP_EOL . PHP_EOL;
+    }
+
+    public function stop()
+    {
+        return '';
+    }
+
+    public function beginReport($section, $context = null)
+    {
+        if ($context) {
+            return PHP_EOL . $section . ' ' . $context . PHP_EOL;
+        }
+
+        return PHP_EOL . $section . PHP_EOL;
     }
 
     public function progress()
@@ -26,6 +40,6 @@ class TextUiProgressReporter implements ProgressReporterInterface
 
     public function endReport()
     {
-        return PHP_EOL . PHP_EOL;
+        return PHP_EOL;
     }
 }

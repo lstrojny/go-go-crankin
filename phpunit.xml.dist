@@ -3,9 +3,9 @@
          convertErrorsToExceptions="true"
          convertWarningsToExceptions="true"
          convertNoticesToExceptions="true"
-         mapTestClassNameToCoveredClassName="true"
          bootstrap="vendor/autoload.php"
          verbose="true"
+         mapTestClassNameToCoveredClassName="true"
          colors="true"
          strict="true">
 
