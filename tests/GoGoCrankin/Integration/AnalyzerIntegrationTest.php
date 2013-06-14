@@ -30,6 +30,8 @@ Building file list
 
 Executing static analyzer
 ..
+
+
 EOS;
 
         $actualProgressOutput = '';
